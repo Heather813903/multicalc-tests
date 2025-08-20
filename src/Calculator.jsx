@@ -5,31 +5,24 @@ import { OperandContext } from './context/OperandContext';
 
 function Calculator() {
   const { operand } = useContext(OperandContext);
-  const addOne = useMemo(() => {
-    return operand + 1;
-  }, [operand]);
+  const numericOperand = Number(operand) || 0;
 
-  const cubed = useMemo(() => {
-    return operand ** 2;
-  }, [operand]);
 
-  const multiplyByThree = useMemo(() => {
-    operand * 3;
-  }, [operand]);
-
-  const squareRoot = useMemo(() => {
-    return Math.sqrt(operand);
-  }, [operand]);
+  const addOne = useMemo(() =>  numericOperand + 1, [numericOperand]);
+  const cubed = useMemo(() => numericOperand ** 3, [numericOperand]);
+  const multiplyByThree = useMemo(() => numericOperand * 3, [numericOperand]);
+  const squareRoot = useMemo(() => numericOperand >= 0 ? Math.sqrt(numericOperand) : 'Invalid', [numericOperand]);
+  
 
   return (
-    <>
+    
       <ul className={styles.calculatorList}>
         <Calculation result={addOne} title="Add 1" />
         <Calculation result={cubed} title="Cubed" />
         <Calculation result={multiplyByThree} title="Multiply by 3" />
         <Calculation result={squareRoot} title="Square Root" />
       </ul>
-    </>
+    
   );
 }
 
